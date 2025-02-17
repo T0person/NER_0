@@ -2,3 +2,6 @@
 venv/
 .vscode/
 *.csv
+*.spacy
+__pycache__
+output/model-last
