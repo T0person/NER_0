@@ -69,7 +69,7 @@ def _generate_training_data(_reg : str, _text='', _training_data=[], essence="PR
     return _training_data
 
 
-def find_essences(_df: pd.DataFrame):
+def find_essences(_df: pd.DataFrame, create_test_file=False):
 
     # Проход по всему датафрейму
     for id, row in _df.iterrows():
@@ -130,7 +130,8 @@ def find_essences(_df: pd.DataFrame):
             
         else:
             _generate_training_data(reg_essence, row['text'], essence='MENTION')
-    _df.to_csv("./test.csv", header=True, index=False)
+    if create_test_file:
+        _df.to_csv("./test.csv", header=True, index=False)
     return _generate_training_data(None)
 
 def create_cfg(_data, _file_path):
@@ -156,7 +157,7 @@ if __name__ == "__main__":
 
     train_df = drop_duplicate(train_df)  # Удаление дубликатов
 
-    training_data = find_essences(train_df)
+    training_data = find_essences(train_df, create_test_file=True)
 
     create_cfg(training_data, "./train.spacy")
     
