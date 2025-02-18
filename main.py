@@ -115,6 +115,9 @@ def find_essences(_df: pd.DataFrame):
         elif row['essence'].lower() not in row['text'].lower():
             # Изменяем датасет и добавляем к основным сущностям
             _temp_text = f"{row['essence']} - {row['text']}"
+            # print(_df.loc[id]['text'])
+            _df.at[id, 'text'] = _temp_text
+            # _df.iloc[id]['text'] = _temp_text
             if "+" in row['essence']:
                 row['essence'] = row['essence'].replace("+", "[\\+]")
             _generate_training_data(row['essence'], _temp_text)
@@ -127,6 +130,7 @@ def find_essences(_df: pd.DataFrame):
             
         else:
             _generate_training_data(reg_essence, row['text'], essence='MENTION')
+    _df.to_csv("./test.csv", header=True, index=False)
     return _generate_training_data(None)
 
 def create_cfg(_data, _file_path):

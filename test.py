@@ -7,7 +7,7 @@ nlp = spacy.load("./output/model-best")
 
 path = getenv("TRAIN_PATH")
 
-df = load_csv(path)  # Начальный (тренировочный) датафрейм
+df = load_csv('test.csv')  # Начальный (тренировочный) датафрейм
 
 print(f'Введите строку или введите 0:')
 
