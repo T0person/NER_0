@@ -58,7 +58,9 @@ def _generate_training_data(_reg : str, _text='', _training_data=[], essence="PR
     
     _total = list(re.finditer(_reg, _text, re.I))
     _data = []
-        
+
+    if len(_total) == 0:
+        lol =1
     for _essence in _total:
         _data.append((_essence.start(), _essence.end(), essence))
             
@@ -81,7 +83,7 @@ def find_essences(_df: pd.DataFrame, create_test_file=False):
         _first_word_text = re.match(_first_word, row['text'])
         
         # Регулярные выражения для переборов сущностей
-        reg_essence = f"\\b{row['essence']}[.]?\\w+?\\b"
+        reg_essence = f"\\b{row['essence']}(?:[-.]?\\w+?\\b|\\w*?\\b)"
         reg_prefix = f"\\b\\w+?{row['essence']}.*?\\b" # Слова с приставкой
         reg_prefix_with_dash = f"\\b\\w+?{row['essence']}.*?\\b -|\\b\\w+?{row['essence']}.*?\\b —"
 
@@ -97,7 +99,8 @@ def find_essences(_df: pd.DataFrame, create_test_file=False):
         # Разбиение имени и фамилии
         total_text_fio = None
         total_split_fio = row['essence'].split()
-        
+        if "Гурзуф" in row['essence'] or "Брюссель" in row['essence'] or "Pfizer" in row['essence']:
+            lol =1
         if len(total_split_fio) == 2:
             fio = f'{total_split_fio[0]} \\s\\w{2,}?\\s {total_split_fio[1]}'
             total_text_fio = re.search(fio, row['text'], re.I)

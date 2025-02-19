@@ -17,7 +17,8 @@ while True:
     if text == '0':
         id = random.randint(0, len(df))
         text = df.loc[id]['text']
-        print(text)
+        # print(df.iloc[id]['essence'])
+        # print(text)
     
     doc = nlp(text)    
 
